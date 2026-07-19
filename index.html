@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master App Mockup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 844px;
+            background-color: #fff;
+            border-radius: 40px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 8px solid #222;
+        }
+
+        .app-header {
+            background-color: #b80d22;
+            color: #fff;
+            padding: 35px 20px 15px 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #fafafa;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .app-screen {
+            display: none;
+        }
+        .app-screen.active {
+            display: block;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #f0f0f0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .badge-red { background: #ffebee; color: #c62828; }
+        .badge-green { background: #e8f5e9; color: #2e7d32; }
+
+        .event-banner {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #ff5252, #b80d22);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .event-title { font-size: 16px; font-weight: 700; color: #222; margin-bottom: 6px; }
+        .event-info { font-size: 13px; color: #666; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .btn-checkin {
+            width: 100%;
+            background: #b80d22;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .course-item { display: flex; gap: 12px; align-items: center; }
+        .course-img { width: 70px; height: 70px; background: #ddd; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #ffebee; color: #b80d22; font-size: 24px; }
+        .course-info { flex: 1; }
+        .course-title { font-size: 15px; font-weight: 600; color: #222; margin-bottom: 6px; }
+        .progress-bar { width: 100%; height: 6px; background: #eee; border-radius: 10px; overflow: hidden; margin-top: 6px; }
+        .progress-fill { height: 100%; background: #b80d22; width: 0%; transition: width 0.3s; }
+
+        .noti-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+        .noti-icon { width: 40px; height: 40px; background: #fff3f3; color: #b80d22; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .noti-text { font-size: 13px; color: #444; line-height: 1.4; }
+        .noti-time { font-size: 11px; color: #999; margin-top: 4px; }
+
+        .profile-header { display: flex; align-items: center; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid #f5f5f5; margin-bottom: 16px; }
+        .avatar { width: 60px; height: 60px; background: #b80d22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; }
+        .profile-name { font-size: 18px; font-weight: 700; color: #222; }
+        .profile-email { font-size: 13px; color: #666; }
+        .menu-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f9f9f9; color: #333; font-size: 14px; cursor: pointer; }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 70px;
+            background: #ffffff;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 10px;
+            z-index: 10;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            gap: 4px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-item.active {
+            color: #b80d22;
+            font-weight: 700;
+        }
+        .nav-item i {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="app-header" id="app-title">Sự kiện nổi bật</div>
+
+        <div class="app-content">
+            <div class="app-screen active" id="screen-sukien">
+                <div class="card">
+                    <div class="event-banner">MASTER FINANCE 02</div>
+                    <span class="badge badge-green">Sắp diễn ra</span>
+                    <div class="event-title">Làm chủ tài chính - Mở khóa thịnh vượng</div>
+                    <div class="event-info"><i class="fa-regular fa-clock"></i> 08:30 - 17:30 | 29/11/2026</div>
+                    <div class="event-info"><i class="fa-solid fa-location-dot"></i> Khách sạn Kim Liên, Đống Đa, Hà Nội</div>
+                    <button class="btn-checkin" onclick="alert('Đang mở camera quét mã QR Check-in!')">Quét Mã QR Vé Đã Mua</button>
+                </div>
+
+                <div class="card">
+                    <div class="event-banner" style="background: linear-gradient(135deg, #fbc02d, #f57f17);">MASTER FUNNEL 05</div>
+                    <span class="badge badge-red">Đã kết thúc</span>
+                    <div class="event-title">Phễu sản phẩm tự động thu hút khách hàng tiềm năng</div>
+                    <div class="event-info"><i class="fa-regular fa-clock"></i> 08:30 - 17:30 | 15/05/2026</div>
+                </div>
+            </div>
+
+            <div class="app-screen" id="screen-khoahoc">
+                <div class="card">
+                    <div class="course-item">
+                        <div class="course-img"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="course-info">
+                            <div class="course-title">Master Happiness - Thiết kế cuộc sống hạnh phúc</div>
+                            <div class="event-info">Thời lượng: 12 giờ 12 phút</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+                            <div class="event-info" style="margin-top: 4px; font-size: 11px;">Tiến độ học: 75%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="course-item">
+                        <div class="course-img"><i class="fa-solid fa-wallet"></i></div>
+                        <div class="course-info">
+                            <div class="course-title">Tư duy Quản lý tài chính cá nhân căn bản</div>
+                            <div class="event-info">Thời lượng: 6 giờ 45 phút</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 0%;"></div></div>
+                            <div class="event-info" style="margin-top: 4px; font-size: 11px;">Tiến độ học: 0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-screen" id="screen-thongbao">
+                <div class="card">
+                    <div class="noti-item">
+                        <div class="noti-icon"><i class="fa-solid fa-bell"></i></div>
+                        <div class="noti-info">
+                            <div class="noti-text">Chào mừng bạn đã đăng ký tài khoản thành công tại <strong>Master Anh Đức Academy</strong>!</div>
+                            <div class="noti-time">Vừa xong</div>
+                        </div>
+                    </div>
+                    <div class="noti-item">
+                        <div class="noti-icon"><i class="fa-solid fa-ticket"></i></div>
+                        <div class="noti-info">
+                            <div class="noti-text">Vé tham dự sự kiện <strong>Master Finance 02 HN</strong> của bạn đã được xác nhận mã kiểm tra.</div>
+                            <div class="noti-time">2 giờ trước</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-screen" id="screen-taikhoan">
+                <div class="card">
+                    <div class="profile-header">
+                        <div class="avatar">M</div>
+                        <div>
+                            <div class="profile-name">Minh Tran</div>
+                            <div class="profile-email">minh.tran@example.com</div>
+                        </div>
+                    </div>
+                    <div class="menu-item"><span><i class="fa-solid fa-user-shield"></i> &nbsp;Bảo mật tài khoản</span><i class="fa-solid fa-angle-right"></i></div>
+                    <div class="menu-item"><span><i class="fa-solid fa-clock-history"></i> &nbsp;Lịch sử Check-in sự kiện</span><i class="fa-solid fa-angle-right"></i></div>
+                    <div class="menu-item" style="color: #c62828;"><span><i class="fa-solid fa-right-from-bracket"></i> &nbsp;Đăng xuất</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('sukien', 'Sự kiện nổi bật', this)">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Sự kiện</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('khoahoc', 'Khóa học của tôi', this)">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Khóa học</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('thongbao', 'Thông báo điện tử', this)">
+                <i class="fa-solid fa-bell"></i>
+                <span>Thông báo</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('taikhoan', 'Trang cá nhân', this)">
+                <i class="fa-solid fa-user"></i>
+                <span>Tài khoản</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(screenId, titleText, element) {
+            const screens = document.querySelectorAll('.app-screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+
+            document.getElementById('screen-' + screenId).classList.add('active');
+
+            document.getElementById('app-title').innerText = titleText;
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>
